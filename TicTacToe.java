@@ -2,25 +2,25 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
+	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
 	static int playerScore = 0;
+  static int player = 1;
 	static Scanner input = new Scanner(System.in);
-	
+
 	public static void main (String[] args) {
-		char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
+
 
 		System.out.println("Lets play Tic Tac Toe!");
-
-		printBoard(gameBoard);
-		
-
-		boolean gameOver = false;
-		boolean playAgain = true;
+    printBoard();
+    while(!isWinningPattern() && !isFull()){
+      playerMove();
+    }
 
 	}
 
-		
 
-	public static void printBoard(char[][]gameBoard){
+
+	public static void printBoard(){
                for (int i = 0; i < 3; i++) {
 
             for (int j = 0; j < 3; j++) {
@@ -37,8 +37,8 @@ public class TicTacToe {
         }
     }
 
-	public static void updateBoard(int position, int player, char[][] gameBoard) {
-		
+	public static void updateBoard(int position) {
+
 		char character;
 
 		if(player==1) {
@@ -50,39 +50,39 @@ public class TicTacToe {
 		switch (position) {
 			case 1:
 				gameBoard[0][0] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 2:
 				gameBoard[0][1] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 3:
 				gameBoard[0][2] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 4:
 				gameBoard[1][0] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 5:
 				gameBoard[1][1] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 6:
 				gameBoard[1][2] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 7:
 				gameBoard[2][0] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 8:
 				gameBoard[2][1] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			case 9:
 				gameBoard[2][2] = character;
-				printBoard(gameBoard);
+				printBoard();
 				break;
 			default:
 				break;
@@ -91,27 +91,28 @@ public class TicTacToe {
 
 	}
 
-	public static void playerMove(char[][] gameBoard) {
+	public static void playerMove() {
 
 		System.out.println("Make a move. Choose spot (1-9)");
 
 		int move = input.nextInt();
 
-		boolean result = isValidMove(move,gameBoard);
+		boolean result = isValidMove(move);
 
 		while(!result) {
 			System.out.println("Invalid move. Try again");
 			move = input.nextInt();
-			result = isValidMove(move,gameBoard);
+			result = isValidMove(move);
 
 		}
 
 		System.out.println("Player moved at position " + move);
-		updateBoard(move,1,gameBoard);
+		updateBoard(move);
+    changePlayer();
 
 	}
 
-	public static boolean isValidMove(int move, char[][] gameBoard) {
+	public static boolean isValidMove(int move) {
 
 		switch (move) {
 			case 1:
@@ -151,13 +152,13 @@ public class TicTacToe {
 					return false;
 				}
 			case 7:
-				if(gameBoard[2][1] == '7') {
+				if(gameBoard[2][0] == '7') {
 					return true;
 				}else{
 					return false;
 				}
 			case 8:
-				if(gameBoard[2][2] == '8') {
+				if(gameBoard[2][1] == '8') {
 					return true;
 				}else{
 					return false;
@@ -175,9 +176,9 @@ public class TicTacToe {
 			}
 
 		}
-		
 
-	public static void resetBoard(char[][] gameBoard) {
+
+	public static void resetBoard() {
  	   gameBoard[0][0] = '1';
  	   gameBoard[0][1] = '2';
  	   gameBoard[0][2] = '3';
@@ -188,8 +189,8 @@ public class TicTacToe {
  	   gameBoard[2][1] = '8';
  	   gameBoard[2][2] = '9';
  	}
-	
-public static boolean isWinningPattern(char[][] gameBoard) {
+
+public static boolean isWinningPattern() {
   for(int i=0;i<3;i++){
     if ((gameBoard[i][0]==gameBoard[i][1]) &&(gameBoard[i][1]==gameBoard[i][2]))
       return true;
@@ -203,5 +204,24 @@ public static boolean isWinningPattern(char[][] gameBoard) {
   return false;
 }
 
+public static boolean isFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if ((gameBoard[i][j] <='9') && (gameBoard[i][j] >='1')) {
+                    return false;
+                }
+            }
+        }
 
+        return true;
+    }
+
+public static void changePlayer() {
+        if (player == 1) {
+            player = 2;
+        }
+        else {
+            player = 1;
+        }
+    }
 }
