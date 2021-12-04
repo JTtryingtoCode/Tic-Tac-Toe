@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class TicTacToe {
 
 	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
-	static int playerScore = 0;
   static int player = 1;
 	static Scanner input = new Scanner(System.in);
 
@@ -15,7 +14,10 @@ public class TicTacToe {
     while(!isWinningPattern() && !isFull()){
       playerMove();
     }
-
+    if(isWinningPattern()){
+      changePlayer();
+      System.out.println("Game Over! Player "+player+ " Wins");
+    }
 	}
 
 
@@ -93,7 +95,7 @@ public class TicTacToe {
 
 	public static void playerMove() {
 
-		System.out.println("Make a move. Choose spot (1-9)");
+		System.out.println("Player "+player+ " turn: ");
 
 		int move = input.nextInt();
 
@@ -106,7 +108,6 @@ public class TicTacToe {
 
 		}
 
-		System.out.println("Player moved at position " + move);
 		updateBoard(move);
     changePlayer();
 
@@ -177,19 +178,6 @@ public class TicTacToe {
 
 		}
 
-
-	public static void resetBoard() {
- 	   gameBoard[0][0] = '1';
- 	   gameBoard[0][1] = '2';
- 	   gameBoard[0][2] = '3';
- 	   gameBoard[1][0] = '4';
- 	   gameBoard[1][1] = '5';
- 	   gameBoard[1][2] = '6';
- 	   gameBoard[2][0] = '7';
- 	   gameBoard[2][1] = '8';
- 	   gameBoard[2][2] = '9';
- 	}
-
 public static boolean isWinningPattern() {
   for(int i=0;i<3;i++){
     if ((gameBoard[i][0]==gameBoard[i][1]) &&(gameBoard[i][1]==gameBoard[i][2]))
@@ -212,7 +200,7 @@ public static boolean isFull() {
                 }
             }
         }
-
+        System.out.println("Game Over! It is tie");
         return true;
     }
 
