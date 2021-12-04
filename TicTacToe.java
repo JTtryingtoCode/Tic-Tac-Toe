@@ -21,14 +21,19 @@ public class TicTacToe {
 		
 
 	public static void printBoard(char[][]gameboard){
-        System.out.println("---+--+---");
-        for (int i = 0; i < 3; i++) {
-            System.out.print("|");
+               for (int i = 0; i < 3; i++) {
+
             for (int j = 0; j < 3; j++) {
-            	System.out.print(gameboard[i][j] + " |");
+
+            	System.out.print(" "+gameBoard[i][j]);
+              if (j==2)
+                break;
+                System.out.print(" |");
             }
             System.out.println();
-            System.out.println("---+--+---");
+            if (i==2)
+              break;
+            System.out.println("---+---+---");
         }
     }
 
