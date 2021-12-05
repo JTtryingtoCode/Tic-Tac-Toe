@@ -5,16 +5,17 @@ public class TicTacToe {
 	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
   static int player = 1;
 	static Scanner input = new Scanner(System.in);
-
+  static boolean gameOver=false;
 	public static void main (String[] args) {
 
 
 		System.out.println("Lets play Tic Tac Toe!");
     printBoard();
-    while(!isWinningPattern() && !isFull()){
+    while((!isWinningPattern() && !isFull()) && !gameOver){
       playerMove();
     }
-    if(isWinningPattern()){
+
+    if(gameOver || isWinningPattern()){
       changePlayer();
       System.out.println("Game Over! Player "+player+ " Wins");
     }
@@ -107,15 +108,20 @@ public class TicTacToe {
 			result = isValidMove(move);
 
 		}
-
-		updateBoard(move);
-    changePlayer();
-
+    if(move == 0){
+      gameOver=true;
+    }
+    else{
+      updateBoard(move);
+      changePlayer();
+    }
 	}
 
 	public static boolean isValidMove(int move) {
 
 		switch (move) {
+      case 0:
+            return true;
 			case 1:
 				if(gameBoard[0][0] == '1') {
 					return true;
