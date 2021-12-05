@@ -115,7 +115,7 @@ public class TicTacToe {
         player1incorrect++;
       }
       else{
-        player1incorrect++;
+        player2incorrect++;
       }
       if (incorrectinrow==3 || player1incorrect==4 || player2incorrect==4){
         gameOver=true;
