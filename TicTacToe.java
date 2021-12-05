@@ -6,6 +6,8 @@ public class TicTacToe {
   static int player = 1;
 	static Scanner input = new Scanner(System.in);
   static boolean gameOver=false;
+  static int player1incorrect=0;
+  static int player2incorrect=0;
 	public static void main (String[] args) {
 
 
@@ -15,7 +17,7 @@ public class TicTacToe {
       playerMove();
     }
 
-    if(gameOver || isWinningPattern()){
+    if(isWinningPattern()){
       changePlayer();
       System.out.println("Game Over! Player "+player+ " Wins");
     }
@@ -101,15 +103,33 @@ public class TicTacToe {
 		int move = input.nextInt();
 
 		boolean result = isValidMove(move);
-
+    int incorrectinrow=1;
 		while(!result) {
-			System.out.println("Invalid move. Try again");
+			System.out.println("Incorrect entry, please try again");
 			move = input.nextInt();
-			result = isValidMove(move);
+      if(isValidMove(move)){
+			     result = isValidMove(move);
+           break;}
+      incorrectinrow++;
+      if (player==1){
+        player1incorrect++;
+      }
+      else{
+        player1incorrect++;
+      }
+      if (incorrectinrow==3 || player1incorrect==4 || player2incorrect==4){
+        gameOver=true;
+        break;
 
+      }
 		}
-    if(move == 0){
+    if(gameOver==true){
+      System.out.println("Player "+player+ " forfeit the game due to reaching maximum incorrect entries.");
+    }
+    else if(move == 0){
       gameOver=true;
+      changePlayer();
+      System.out.println("Game Over! Player "+player+ " Wins");
     }
     else{
       updateBoard(move);
