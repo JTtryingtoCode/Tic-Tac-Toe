@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-public class TicTacToe {
+public class TicTacToe1 {
 
 	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
   static String player = "1";
@@ -161,9 +161,87 @@ public class TicTacToe {
     }
 	}
 	public static void computerMove() {
+		int count=0;
+		int empty=0;
 
+		boolean found=false;
+		int move=0;
+		for(int i =0; i<3; i++){
+			for(int j =0; j<3; j++){
+				if(gameBoard[i][j]=='O'){
+					count++;
+				}
+				if((gameBoard[i][j]!='O')&&(gameBoard[i][j]!='X')){
+					empty++;
+					move = (int)(gameBoard[i][j]-'0');
+				}
+			}
+		if(count==2 && empty==1){
+			found=true;
+			break;
+			}
+		else{
+			count=0;
+			empty=0;
+		}
+		}
+		if(!found){
+			for(int i =0; i<3; i++){
+			for(int j =0; j<3; j++){
+				if(gameBoard[j][i]=='O'){
+					count++;
+				}
+				if((gameBoard[j][i]!='O')&&(gameBoard[j][i]!='X')){
+					empty++;
+					move = (int)(gameBoard[j][i]-'0');
+				}
+			}
+		if(count==2 && empty==1){
+			found=true;
+			break;
+			}
+		else{
+			count=0;
+			empty=0;
+		}
+		}}
+		if(!found){
+			for(int i =0; i<3; i++){
+				if(gameBoard[i][i]=='O'){
+					count++;
+				}
+				if((gameBoard[i][i]!='O')&&(gameBoard[i][i]!='X')){
+					empty++;
+					move = (int)(gameBoard[i][i]-'0');
+				}
+			}
+		if(count==2 && empty==1){
+			found=true;
+			}
+		else{
+			count=0;
+			empty=0;
+		}
+			}
+			if(!found){
+				for(int i =0,j =2;i<3; i++){
+					if(gameBoard[i][j]=='O'){
+						count++;
+					}
+					if((gameBoard[i][j]!='O')&&(gameBoard[i][j]!='X')){
+						empty++;
+						move = (int)(gameBoard[i][j]-'0');
+					}
+					j--;
+				}
+			if(count==2 && empty==1){
+				found=true;
+				}
+
+			}
+		if(!found){
 			Random rand = new Random();
-			int move = rand.nextInt(9)+1;
+			move = rand.nextInt(9)+1;
 
 			boolean result = isValidMove(move);
 
@@ -171,7 +249,7 @@ public class TicTacToe {
 					move = rand.nextInt(9)+1;
 					result = isValidMove(move);
 			}
-
+		}
 			System.out.println("Computer moved at position "+ move);
 			changePlayer();
 			updateBoard(move);
@@ -290,3 +368,4 @@ public static void changePlayer() {
 		break;
 }
 }}
+
