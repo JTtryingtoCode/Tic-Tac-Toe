@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-public class TicTacToe1 {
+public class TicTacToe {
 
 	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
   static String player = "1";
