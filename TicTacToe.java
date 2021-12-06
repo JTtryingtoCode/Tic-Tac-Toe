@@ -1,23 +1,30 @@
 import java.util.Scanner;
 import java.util.Random;
 public class TicTacToe {
-
 	static char [][] gameBoard = {{'1','2','3'}, {'4','5','6'}, {'7','8','9'}};
-  static String player = "1";
+	static String player = "1";
 	static Scanner input = new Scanner(System.in);
-  static boolean gameOver=false;
-  static int player1incorrect=0;
-  static int player2incorrect=0;
-	static int mode;
+	static boolean gameOver=false;
+	static int player1incorrect=0;
+	static int player2incorrect=0;
+	static String mode;
+	static int modeNum;
 
 	public static void main (String[] args) {
 
 
 		System.out.println("Lets play Tic Tac Toe!");
 		System.out.println("Enter 1 for 2 players mode or enter 2 for playing against the CPU or enter 0 to quit.");
-		mode=input.nextInt();
+		mode=input.nextLine();
+		while(isValid(mode) == false) {
+			System.out.println("Enter 1 for 2 players mode or enter 2 for playing against the CPU or enter 0 to quit.");
+			mode = input.nextLine();
+		}
+		
+		modeNum  = Integer.parseInt(mode);
+		
 
-		if (mode==1){
+		if (modeNum==1){
 			printBoard();
 			while((!isWinningPattern() && !isFull()) && !gameOver){
 
@@ -28,11 +35,12 @@ public class TicTacToe {
 			if(isWinningPattern()){
 				changePlayer();
 				System.out.println("Game Over! Player "+player+ " Wins");
-			}}
-		if(mode==0){
+				}
+			}
+		if(modeNum==0){
 				System.out.println("Game Over!");
 		}
-		if(mode==2){
+		if(modeNum==2){
 			printBoard();
 			playerMove();
 			while((!isWinningPattern() && !isFull()) && !gameOver){
@@ -44,27 +52,34 @@ public class TicTacToe {
 			}
 			if(isWinningPattern()){
 				System.out.println("Game Over! Player "+player+ " Wins");
+				}
+			}
 		}
+	
+	
+	public static boolean isValid(String s) {
+		if(s.length() == 1 && Character.isDigit(s.charAt(0)))
+			return true;
+		else {
+			return false;
+		}
+			
 	}
-
-	}
-
+	
 	public static void printBoard(){
-               for (int i = 0; i < 3; i++) {
-
-            for (int j = 0; j < 3; j++) {
-
-            	System.out.print(" "+gameBoard[i][j]);
-              if (j==2)
-                break;
-                System.out.print(" |");
-            }
-            System.out.println();
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				System.out.print(" "+gameBoard[i][j]);
+				if (j==2)
+					break;
+				System.out.print(" |");
+                }
+			System.out.println();
             if (i==2)
               break;
             System.out.println("---+---+---");
-        }
-    }
+            }
+		}
 
 	public static void updateBoard(int position) {
 
@@ -127,7 +142,7 @@ public class TicTacToe {
 		int move = input.nextInt();
 
 		boolean result = isValidMove(move);
-    int incorrectinrow=0;
+		int incorrectinrow=0;
 		while(!result) {
 			if(isValidMove(move)){
 					 result = isValidMove(move);
@@ -144,7 +159,7 @@ public class TicTacToe {
 				break;}
 				System.out.println("Incorrect entry, please try again");
 				move = input.nextInt();
-}
+				}
 
     if(gameOver==true){
 
@@ -349,7 +364,7 @@ public static boolean isFull() {
     }
 
 public static void changePlayer() {
-	switch(mode){
+	switch(modeNum){
 	case 1:
 				if (player.equals("1")) {
 						player = "2";
@@ -366,6 +381,6 @@ public static void changePlayer() {
 			player = "1";
 		}
 		break;
+		}
+	}
 }
-}}
-
