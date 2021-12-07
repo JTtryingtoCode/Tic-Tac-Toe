@@ -11,19 +11,18 @@ public class TicTacToe {
 	static int modeNum;
 
 	public static void main (String[] args) {
-
-
 		System.out.println("Lets play Tic Tac Toe!");
 		System.out.println("Enter 1 for 2 players mode or enter 2 for playing against the CPU or enter 0 to quit.");
 		mode=input.nextLine();
+		//handles invalid inputs
 		while(isValid(mode) == false) {
 			System.out.println("Enter 1 for 2 players mode or enter 2 for playing against the CPU or enter 0 to quit.");
 			mode = input.nextLine();
 		}
-		
-		modeNum  = Integer.parseInt(mode);
-		
 
+		modeNum  = Integer.parseInt(mode);
+
+//mode1
 		if (modeNum==1){
 			printBoard();
 			while((!isWinningPattern() && !isFull()) && !gameOver){
@@ -31,15 +30,16 @@ public class TicTacToe {
 				playerMove();
 				changePlayer();
 			}
-
 			if(isWinningPattern()){
 				changePlayer();
 				System.out.println("Game Over! Player "+player+ " Wins");
 				}
 			}
+			//exit
 		if(modeNum==0){
 				System.out.println("Game Over!");
 		}
+		//mode2
 		if(modeNum==2){
 			printBoard();
 			playerMove();
@@ -55,17 +55,17 @@ public class TicTacToe {
 				}
 			}
 		}
-	
-	
+
+//hadles invalid inputs for mode
 	public static boolean isValid(String s) {
-		if(s.length() == 1 && Character.isDigit(s.charAt(0)))
+		if(s.length() == 1 && Character.isDigit(s.charAt(0))||s.equals("000"))
 			return true;
 		else {
 			return false;
 		}
-			
+
 	}
-	
+//prints board
 	public static void printBoard(){
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -80,7 +80,7 @@ public class TicTacToe {
             System.out.println("---+---+---");
             }
 		}
-
+//updates board
 	public static void updateBoard(int position) {
 
 		char character;
@@ -134,18 +134,18 @@ public class TicTacToe {
 		}
 
 	}
-
+//human player
 	public static void playerMove() {
 
 		System.out.println("Player "+player+ " turn: ");
 
-		int move = input.nextInt();
-
-		boolean result = isValidMove(move);
+		String moveS = input.nextLine();
+//validation, counts incorrect moves
+		boolean result = isValidMove(moveS);
 		int incorrectinrow=0;
 		while(!result) {
-			if(isValidMove(move)){
-					 result = isValidMove(move);
+			if(isValidMove(moveS)){
+					 result = isValidMove(moveS);
 					 break;}
 			incorrectinrow++;
 			if (player.equals("1")){
@@ -158,29 +158,33 @@ public class TicTacToe {
 				gameOver=true;
 				break;}
 				System.out.println("Incorrect entry, please try again");
-				move = input.nextInt();
+				moveS = input.nextLine();
 				}
 
     if(gameOver==true){
 
       System.out.println("Player "+player+ " forfeit the game due to reaching maximum incorrect entries.");
     }
-    else if(move == 0){
+    else if(Integer.parseInt(moveS) == 0){
       gameOver=true;
 			changePlayer();
       System.out.println("Game Over! Player "+player+ " Wins");
     }
     else{
+			//display the move
+			int move=Integer.parseInt(moveS);
       updateBoard(move);
 
     }
 	}
+	//computer move
 	public static void computerMove() {
 		int count=0;
 		int empty=0;
-
+//checks if there is a winning move
 		boolean found=false;
 		int move=0;
+		//winning row
 		for(int i =0; i<3; i++){
 			for(int j =0; j<3; j++){
 				if(gameBoard[i][j]=='O'){
@@ -200,6 +204,7 @@ public class TicTacToe {
 			empty=0;
 		}
 		}
+		//winning column
 		if(!found){
 			for(int i =0; i<3; i++){
 			for(int j =0; j<3; j++){
@@ -220,6 +225,7 @@ public class TicTacToe {
 			empty=0;
 		}
 		}}
+		//winning diagonal1
 		if(!found){
 			for(int i =0; i<3; i++){
 				if(gameBoard[i][i]=='O'){
@@ -238,6 +244,7 @@ public class TicTacToe {
 			empty=0;
 		}
 			}
+			//winning diagonal2
 			if(!found){
 				for(int i =0,j =2;i<3; i++){
 					if(gameBoard[i][j]=='O'){
@@ -254,24 +261,27 @@ public class TicTacToe {
 				}
 
 			}
+			//random move
 		if(!found){
 			Random rand = new Random();
 			move = rand.nextInt(9)+1;
-
-			boolean result = isValidMove(move);
+			String moveS=String.valueOf(move);
+			boolean result = isValidMove(moveS);
 
 			while(!result){
 					move = rand.nextInt(9)+1;
-					result = isValidMove(move);
+					moveS=String.valueOf(move);
+					result = isValidMove(moveS);
 			}
 		}
 			System.out.println("Computer moved at position "+ move);
 			changePlayer();
 			updateBoard(move);
 	}
-
-	public static boolean isValidMove(int move) {
-
+//validation of input for the move
+	public static boolean isValidMove(String moveS) {
+		if(isValid(moveS)){
+			int move=Integer.parseInt(moveS);
 		switch (move) {
       case 0:
             return true;
@@ -334,9 +344,12 @@ public class TicTacToe {
 					return false;
 
 			}
-
 		}
-
+		else{
+			return false;
+		}
+		}
+//looks for winning pattern
 public static boolean isWinningPattern() {
   for(int i=0;i<3;i++){
     if ((gameBoard[i][0]==gameBoard[i][1]) &&(gameBoard[i][1]==gameBoard[i][2]))
@@ -350,7 +363,7 @@ public static boolean isWinningPattern() {
     return true;
   return false;
 }
-
+//checks for tie
 public static boolean isFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -362,7 +375,7 @@ public static boolean isFull() {
         System.out.println("Game Over! It is tie");
         return true;
     }
-
+//changes current player
 public static void changePlayer() {
 	switch(modeNum){
 	case 1:
