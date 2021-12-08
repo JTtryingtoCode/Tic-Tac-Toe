@@ -1,4 +1,4 @@
-/Added CPU assist for mode1(two players)
+//Added CPU assist for mode1(two players)
 import java.util.Scanner;
 import java.util.Random;
 public class TicTacToe {
